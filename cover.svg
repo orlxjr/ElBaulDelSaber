@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <rect width="1280" height="720" fill="#f5f0de"/>
+  <rect x="90" y="80" width="1100" height="560" rx="36" fill="#eedbb0" stroke="#19304e" stroke-width="7"/>
+  <circle cx="640" cy="260" r="76" fill="#dc8937"/><path d="M640 205v58l42 25" fill="none" stroke="#fffdf7" stroke-width="13" stroke-linecap="round"/>
+  <text x="640" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="62" fill="#19304e">REFRANES Y RECUERDOS</text>
+  <text x="640" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" fill="#19304e">Un momento para recordar y compartir</text>
+  <text x="640" y="545" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#566470">Juego de estimulación cognitiva</text>
+</svg>

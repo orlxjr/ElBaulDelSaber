@@ -1,0 +1,11 @@
+{
+  "title": "Refranes y Recuerdos",
+  "version": "2.0.0",
+  "entrypoint": "main.py",
+  "resolution": "1280x720",
+  "fps": 60,
+  "engine": "pygame",
+  "genre": "Estimulación cognitiva",
+  "description": "Juego guiado de refranes populares y reflexión emocional para adultos mayores.",
+  "cover": "cover.svg"
+}
