@@ -148,6 +148,10 @@ class WelcomeScreen(Screen):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self._app.stop()
             return
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # Detectar click en el botón Comenzar para detener la música intro
+            if self._start.rect.collidepoint(event.pos):
+                pygame.mixer.music.stop()
         self._start.handle_event(event)
         self._exit.handle_event(event)
 
@@ -317,11 +321,15 @@ class ReflectionScreen(Screen):
         victory_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                     "assets", "Sonidos", "victory.mp3")
         self._sound_victory = pygame.mixer.Sound(victory_path)
-        self._sound_victory.play()
+        self._victory_played = False
 
     def update(self, dt):
         super().update(dt)
         self._next.update(dt)
+        # Reproducir sonido de victoria solo una vez al entrar a la pantalla
+        if not self._victory_played:
+            self._sound_victory.play()
+            self._victory_played = True
 
     def draw(self, surface):
         self.draw_background(surface)
