@@ -4,20 +4,8 @@
 __pycache__/
 
 # Dependencies
-.venv/
 venv/
-node_modules/
-
-# Build/dist directories
-build/
-dist/
-*.egg-info/
-
-# Logs and temp files
-*.log
-*.tmp
-
-# Environment files
+.venv/
 .env
 .env.local
 *.env.*
@@ -26,16 +14,26 @@ dist/
 .vscode/
 .idea/
 
-# OS generated files
-.DS_Store
-Thumbs.db
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
 # Coverage reports
 .coverage
 coverage/
 htmlcov/
 
-# Python cache
-.mypy_cache/
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Testing
 .pytest_cache/
+.mypy_cache/
 ```
