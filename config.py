@@ -45,3 +45,11 @@ FADE_ENTER = 0.45    # fundido de entrada de pantalla
 PRESS_ANIM = 0.12    # hundimiento al pulsar
 HOVER_ANIM = 0.14    # iluminación al pasar el ratón
 BURST_LIFE = 0.95    # vida de las partículas de celebración
+
+# ---------------------------------------------------------------------------
+# Rutas de assets
+# ---------------------------------------------------------------------------
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
+SONIDOS_DIR = os.path.join(ASSETS_DIR, "Sonidos")
