@@ -1,146 +1,51 @@
-# Dependencies
-__pycache__/
-
-# Compiled Python files
+# Compiled and build artifacts
 *.pyc
-*.pyo
-*.pyd
+__pycache__/
+*.o
+*.obj
+*.out
+*.dll
+*.so
+*.a
+*.class
+*.exe
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Unit test / coverage reports
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-htmlcov/
-.tox/
-.nox/
-.coverage.xml
-.cover_html_folder/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
+# Dependencies
+.venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
+node_modules/
+dist/
+build/
+target/
+.gradle/
 .mypy_cache/
-.dmypy.json
-dmypy.json
+.pytest_cache/
 
-# Pyre type checker
-.pyre/
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
 
-# IDEs
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
 .vscode/
 .idea/
 
-# OS generated files
+# System files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
-desktop.ini
 
-# Logs
-*.log
+# Coverage
+coverage/
+htmlcov/
+.coverage
 
-# Temporary files
-*.tmp
-*.temp
-*~
-
-# Git
-.git/
-
-# Compression files
+# Compressed files
 *.zip
 *.gz
 *.tar
@@ -163,159 +68,3 @@ desktop.ini
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-
-# Images (from file changes)
-*.jfif
-*.png
-
-# Audio (from file changes)
-*.mp3
-*.wav
-*.ogg
-*.flac
-*.m4a
-
-# Fonts (from file changes)
-*.ttf
-*.otf
-*.woff
-*.woff2
-
-# Video (from file changes)
-*.mp4
-*.avi
-*.mov
-*.wmv
-*.flv
-*.webm
-
-# Documents (from file changes)
-*.pdf
-*.doc
-*.docx
-*.xls
-*.xlsx
-*.ppt
-*.pptx
-
-# Archives
-*.iso
-*.dmg
-*.img
-
-# Backup files
-*~
-*.bak
-*.backup
-
-# Editor swap files
-*.swp
-*.swo
-
-# Processed files
-*.min.js
-*.min.css
-*.bundle.js
-*.bundle.css
-
-# Database
-*.sqlite
-*.sqlite3
-*.db
-
-# Configuration files
-config/
-configs/
-
-# Cache directories
-.cache/
-.caches/
-
-# Lock files
-*.lock
-
-# Output directories
-output/
-outputs/
-results/
-result/
-
-# Data files
-*.csv
-*.jsonl
-*.parquet
-*.h5
-*.pkl
-*.pickle
-
-# Machine learning
-*.pth
-*.ckpt
-*.model
-checkpoints/
-saved_models/
-models/
-
-# Testing
-.tests/
-test_results/
-
-# Coverage
-coverage/
-
-# Distribution
-dist/
-release/
-releases/
-
-# Build
-build/
-target/
-out/
-bin/
-obj/
-
-# Vendor
-vendor/
-third_party/
-
-# Assets
-assets/
-
-# Public
-public/
-
-# Static
-static/
-media/
-
-# Temporary storage
-tmp/
-temp/
-
-# Sessions
-*.session
-
-# Thumbnails
-*.thumb
-
-# Compressed
-*.compressed
-
-# Encrypted
-*.encrypted
-
-# Hidden files except .gitignore
-.*
-
-# All files in assets directory except .gitignore
-assets/*
-!assets/.gitignore
-
-# All files in Sonidos directory except .gitignore
-Sonidos/*
-!Sonidos/.gitignore
-
-# Original images directory (moved to assets)
-Imagen/
-Imagen/*
