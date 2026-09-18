@@ -321,17 +321,28 @@ class ReflectionScreen(Screen):
         victory_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                     "assets", "Sonidos", "victory.mp3")
         self._sound_victory = pygame.mixer.Sound(victory_path)
-        self._victory_channel = None
+        self._victory_played = False  # Bandera para controlar reproducción única
+
+    def on_enter(self):
+        """Se llama cuando la pantalla se vuelve activa"""
+        # Reproducir solo si no se ha reproducido aún en esta visita
+        if self._sound_victory and not self._victory_played:
+            self._victory_played = True
+            self._sound_victory.play()
+
+    def on_leave(self):
+        """Se llama cuando la pantalla deja de ser activa"""
+        # Detener el sonido al salir
+        if self._sound_victory:
+            self._sound_victory.stop()
+        # Resetear la bandera para permitir reproducción en una futura visita legítima
+        self._victory_played = False
 
     def update(self, dt):
         super().update(dt)
         self._next.update(dt)
 
     def draw(self, surface):
-        # Reproducir sonido de victoria solo una vez al entrar a la pantalla
-        if self._victory_channel is None:
-            self._victory_channel = self._sound_victory.play()
-        
         self.draw_background(surface)
         cx = WIDTH // 2
         draw_soft_circle(surface, cx, 150, 250, GOLD, 24)
@@ -394,9 +405,8 @@ class ReflectionScreen(Screen):
         # Detener el sonido de victoria cuando se hace click en "Siguiente refrán" o "Ver mis recuerdos"
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if self._next.rect.collidepoint(event.pos):
-                if self._victory_channel:
-                    self._victory_channel.stop()
-                    self._victory_channel = None
+                if self._sound_victory:
+                    self._sound_victory.stop()
         self._next.handle_event(event)
 
 

@@ -68,15 +68,23 @@ class GameApp:
     # ---------- navegación ----------
     def start_game(self):
         pygame.mixer.music.stop()
+        old_screen = self._screen
         self._screen = GameScreen(self)
+        # No necesitamos llamar on_enter para GameScreen ya que no tiene sonidos especiales
 
     def go_home(self):
+        old_screen = self._screen
         self._screen = WelcomeScreen(self)
+        # WelcomeScreen reproduce intro.mp3 en su __init__
 
     def show_reflection(self, message):
         if self.current not in self._album:
             self._album.append(self.current)
+        old_screen = self._screen
         self._screen = ReflectionScreen(self, message)
+        # Llamar explícitamente on_enter si existe
+        if hasattr(self._screen, 'on_enter'):
+            self._screen.on_enter()
 
     def next_refran(self):
         if self._position + 1 >= self.total:
@@ -86,6 +94,12 @@ class GameApp:
             self.start_game()
 
     def show_album(self):
+        old_screen = self._screen
+        # Detener cualquier sonido de victoria antes de ir al álbum
+        if hasattr(old_screen, '_sound_victory') and old_screen._sound_victory:
+            old_screen._sound_victory.stop()
+        if hasattr(old_screen, 'on_leave'):
+            old_screen.on_leave()
         self._screen = AlbumScreen(self)
 
     def stop(self):
