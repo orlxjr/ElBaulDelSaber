@@ -86,7 +86,7 @@ class WelcomeScreen(Screen):
         self._ambient = Ambient(24)
         self._time = 0.0
         chest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                  "assets", "Imagen", "cofre_final.png")
+                                  "Imagen", "cofre_final.png")
         chest_img = pygame.image.load(chest_path)
         self._chest_w = 150
         self._chest = pygame.transform.smoothscale(
@@ -300,8 +300,6 @@ class ReflectionScreen(Screen):
         action = app.show_album if self._last else app.next_refran
         self._next = Button((460, 566, 360, 74), label, SUCCESS, action,
                             radius=26, size=28, icon="→")
-        # Reproducir sonido de victoria al mostrar la pantalla de reflexión
-        app._sound_manager.play_victory()
 
     def update(self, dt):
         super().update(dt)
