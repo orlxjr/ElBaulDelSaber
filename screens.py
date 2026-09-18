@@ -86,11 +86,17 @@ class WelcomeScreen(Screen):
         self._ambient = Ambient(24)
         self._time = 0.0
         chest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                  "Imagen", "cofre_final.png")
+                                  "assets", "Imagen", "cofre_final.png")
         chest_img = pygame.image.load(chest_path)
         self._chest_w = 150
         self._chest = pygame.transform.smoothscale(
             chest_img, (self._chest_w, int(self._chest_w * chest_img.get_height() / chest_img.get_width())))
+        
+        # Cargar y reproducir música de intro
+        intro_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  "assets", "Sonidos", "intro.mp3")
+        pygame.mixer.music.load(intro_path)
+        pygame.mixer.music.play(-1)  # -1 para loop infinito
 
     def update(self, dt):
         super().update(dt)
@@ -155,6 +161,11 @@ class GameScreen(Screen):
         self._used_hints = set()
         self._time = 0.0
 
+        # Cargar sonidos
+        acertado_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                     "assets", "Sonidos", "acertado.mp3")
+        self._sound_acertado = pygame.mixer.Sound(acertado_path)
+        
         self._input = TextInput((200, 392, 880, 76), "Escribe la continuación que recuerdes…",
                                 self._submit, label="Tu respuesta")
         self._check = Button((900, 520, 230, 70), "Comprobar", SUCCESS, self._submit_input,
@@ -194,6 +205,7 @@ class GameScreen(Screen):
         cx, cy = self._check.rect.center
         if self._app.current.es_respuesta_correcta(answer):
             self._app.register_hit()
+            self._sound_acertado.play()
             self._app.celebrate(cx, cy, kind="hit")
             self._app.flash(GOLD, 90)
             self._app.show_reflection("¡Qué bonito recordarlo! Sigamos cuando quieras.")
@@ -300,6 +312,12 @@ class ReflectionScreen(Screen):
         action = app.show_album if self._last else app.next_refran
         self._next = Button((460, 566, 360, 74), label, SUCCESS, action,
                             radius=26, size=28, icon="→")
+        
+        # Cargar sonido de victoria
+        victory_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                    "assets", "Sonidos", "victory.mp3")
+        self._sound_victory = pygame.mixer.Sound(victory_path)
+        self._sound_victory.play()
 
     def update(self, dt):
         super().update(dt)
