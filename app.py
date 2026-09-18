@@ -6,15 +6,72 @@ mediante sus métodos (register_hit / register_miss / next_refran / ...).
 import random
 import pygame
 
-from config import WIDTH, HEIGHT, FPS, BG_IDLE, GOLD, WHITE, SUCCESS, SECONDARY
+from config import WIDTH, HEIGHT, FPS, BG_IDLE, GOLD, WHITE, SUCCESS, SECONDARY, SONIDOS_DIR
 from refranes import REFRANES
 from screens import WelcomeScreen, GameScreen, ReflectionScreen, AlbumScreen
 from ui import FXLayer
 
 
+class SoundManager:
+    """Gestor de sonidos del juego."""
+    
+    def __init__(self):
+        self._intro = None
+        self._acertado = None
+        self._victory = None
+        self._load_sounds()
+        self._intro_playing = False
+    
+    def _load_sounds(self):
+        """Carga los archivos de sonido."""
+        try:
+            intro_path = f"{SONIDOS_DIR}/intro.mp3"
+            self._intro = pygame.mixer.Sound(intro_path)
+            self._intro.set_volume(0.5)
+        except FileNotFoundError:
+            print(f"Advertencia: {SONIDOS_DIR}/intro.mp3 no encontrado")
+        
+        try:
+            acertado_path = f"{SONIDOS_DIR}/acertado.mp3"
+            self._acertado = pygame.mixer.Sound(acertado_path)
+            self._acertado.set_volume(0.7)
+        except FileNotFoundError:
+            print(f"Advertencia: {SONIDOS_DIR}/acertado.mp3 no encontrado")
+        
+        try:
+            victory_path = f"{SONIDOS_DIR}/victory.mp3"
+            self._victory = pygame.mixer.Sound(victory_path)
+            self._victory.set_volume(0.8)
+        except FileNotFoundError:
+            print(f"Advertencia: {SONIDOS_DIR}/victory.mp3 no encontrado")
+    
+    def play_intro(self):
+        """Reproduce el sonido de introducción en bucle."""
+        if self._intro and not self._intro_playing:
+            self._intro.play(-1)  # -1 significa loop infinito
+            self._intro_playing = True
+    
+    def stop_intro(self):
+        """Detiene el sonido de introducción."""
+        if self._intro:
+            self._intro.stop()
+            self._intro_playing = False
+    
+    def play_acertado(self):
+        """Reproduce el sonido de acierto."""
+        if self._acertado:
+            self._acertado.play()
+    
+    def play_victory(self):
+        """Reproduce el sonido de victoria."""
+        if self._victory:
+            self._victory.play()
+
+
 class GameApp:
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
         pygame.display.set_caption("Refranes y Recuerdos")
         self._surface = pygame.display.set_mode((WIDTH, HEIGHT))
         self._clock = pygame.time.Clock()
@@ -30,7 +87,9 @@ class GameApp:
         self._shake_ttl = 0.0
         self._shake_power = 0.0
         self._shake_off = (0, 0)
+        self._sound_manager = SoundManager()
         self._screen = WelcomeScreen(self)
+        self._sound_manager.play_intro()
 
     # ---------- consultas de solo lectura ----------
     @property
@@ -67,9 +126,11 @@ class GameApp:
 
     # ---------- navegación ----------
     def start_game(self):
+        self._sound_manager.stop_intro()
         self._screen = GameScreen(self)
 
     def go_home(self):
+        self._sound_manager.play_intro()
         self._screen = WelcomeScreen(self)
 
     def show_reflection(self, message):
@@ -109,6 +170,7 @@ class GameApp:
         self._fx.flash(color, power)
 
     def celebrate(self, x, y, kind="hit"):
+        self._sound_manager.play_acertado()
         if kind == "hit":
             self._fx.burst(x, y, [SUCCESS, GOLD, WHITE], n=26, speed=260)
             self._fx.confetti(x, y, n=18)
