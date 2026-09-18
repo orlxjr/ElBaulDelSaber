@@ -5,7 +5,6 @@ mediante sus métodos (register_hit / register_miss / next_refran / ...).
 """
 import random
 import pygame
-import os
 
 from config import WIDTH, HEIGHT, FPS, BG_IDLE, GOLD, WHITE, SUCCESS, SECONDARY
 from refranes import REFRANES
@@ -13,51 +12,9 @@ from screens import WelcomeScreen, GameScreen, ReflectionScreen, AlbumScreen
 from ui import FXLayer
 
 
-class SoundManager:
-    """Gestor de sonidos del juego."""
-    
-    def __init__(self):
-        self._sounds = {}
-        self._music_loaded = False
-        self._load_sounds()
-    
-    def _load_sounds(self):
-        """Carga todos los sonidos desde la carpeta assets/Sonidos."""
-        sound_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "Sonidos")
-        
-        # Cargar efectos de sonido
-        sound_files = {
-            "intro": "intro.mp3",
-            "acertado": "acertado.mp3",
-            "victory": "victory.mp3"
-        }
-        
-        for name, filename in sound_files.items():
-            path = os.path.join(sound_dir, filename)
-            if os.path.exists(path):
-                self._sounds[name] = pygame.mixer.Sound(path)
-            else:
-                self._sounds[name] = None
-    
-    def play_music(self, name, loops=-1):
-        """Reproduce música de fondo en bucle."""
-        if name in self._sounds and self._sounds[name]:
-            self._sounds[name].play(loops=loops)
-    
-    def play_sound(self, name):
-        """Reproduce un efecto de sonido una vez."""
-        if name in self._sounds and self._sounds[name]:
-            self._sounds[name].play()
-    
-    def stop_music(self):
-        """Detiene la música de fondo."""
-        pygame.mixer.stop()
-
-
 class GameApp:
     def __init__(self):
         pygame.init()
-        pygame.mixer.init()
         pygame.display.set_caption("Refranes y Recuerdos")
         self._surface = pygame.display.set_mode((WIDTH, HEIGHT))
         self._clock = pygame.time.Clock()
@@ -73,7 +30,6 @@ class GameApp:
         self._shake_ttl = 0.0
         self._shake_power = 0.0
         self._shake_off = (0, 0)
-        self._sound_manager = SoundManager()
         self._screen = WelcomeScreen(self)
 
     # ---------- consultas de solo lectura ----------
@@ -111,17 +67,14 @@ class GameApp:
 
     # ---------- navegación ----------
     def start_game(self):
-        self._sound_manager.stop_music()
         self._screen = GameScreen(self)
 
     def go_home(self):
-        self._sound_manager.play_music("intro", loops=-1)
         self._screen = WelcomeScreen(self)
 
     def show_reflection(self, message):
         if self.current not in self._album:
             self._album.append(self.current)
-        self._sound_manager.play_sound("victory")
         self._screen = ReflectionScreen(self, message)
 
     def next_refran(self):
@@ -143,7 +96,6 @@ class GameApp:
         self._streak += 1
         self._hits += 1
         self._max_streak = max(self._max_streak, self._streak)
-        self._sound_manager.play_sound("acertado")
 
     def register_miss(self):
         self._streak = 0
@@ -168,7 +120,6 @@ class GameApp:
 
     # ---------- bucle principal ----------
     def run(self):
-        self._sound_manager.play_music("intro", loops=-1)
         while self._running:
             dt = self._clock.tick(FPS) / 1000.0
             for event in pygame.event.get():
