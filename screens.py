@@ -86,7 +86,7 @@ class WelcomeScreen(Screen):
         self._ambient = Ambient(24)
         self._time = 0.0
         chest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                  "Imagen", "cofre_final.png")
+                                  "assets", "Imagen", "cofre_final.png")
         chest_img = pygame.image.load(chest_path)
         self._chest_w = 150
         self._chest = pygame.transform.smoothscale(
