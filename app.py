@@ -67,6 +67,7 @@ class GameApp:
 
     # ---------- navegación ----------
     def start_game(self):
+        pygame.mixer.music.stop()
         self._screen = GameScreen(self)
 
     def go_home(self):
