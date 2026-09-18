@@ -79,8 +79,10 @@ class Screen(ABC):
 class WelcomeScreen(Screen):
     def __init__(self, app):
         super().__init__(app, BG_TOP, BG_BOTTOM)
-        self._start = Button((440, 512, 400, 88), "Comenzar", PRIMARY, app.start_game,
-                             radius=28, size=34, icon="★")
+        self._start = Button((340, 512, 280, 72), "Comenzar", PRIMARY, app.start_game,
+                             radius=24, size=28, icon="★")
+        self._exit = Button((660, 512, 280, 72), "Salir", (220, 80, 80), app.stop,
+                            radius=24, size=28)
         self._ambient = Ambient(24)
         self._time = 0.0
         chest_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -94,6 +96,7 @@ class WelcomeScreen(Screen):
         super().update(dt)
         self._time += dt
         self._start.update(dt)
+        self._exit.update(dt)
 
     def draw(self, surface):
         self.draw_background(surface)
@@ -122,9 +125,13 @@ class WelcomeScreen(Screen):
         draw_text(surface, "No hay prisa. Cada recuerdo es valioso.", 22, MUTED, (cx, 492), True)
 
         pulse = (math.sin(self._time * 2.4) + 1) / 2
-        by = 556 + math.sin(self._time * 2.4) * 3
-        draw_soft_circle(surface, cx, by, 120 + pulse * 18, PRIMARY, int(34 + pulse * 22))
+        by_start = 556 + math.sin(self._time * 2.4) * 3
+        draw_soft_circle(surface, cx - 160, by_start, 100 + pulse * 14, PRIMARY, int(34 + pulse * 22))
         self._start.draw(surface)
+        
+        by_exit = 556 + math.sin(self._time * 2.4 + 1) * 3
+        draw_soft_circle(surface, cx + 160, by_exit, 100 + pulse * 14, (220, 80, 80), int(34 + pulse * 22))
+        self._exit.draw(surface)
 
         self.finish(surface)
 
@@ -136,6 +143,7 @@ class WelcomeScreen(Screen):
             self._app.stop()
             return
         self._start.handle_event(event)
+        self._exit.handle_event(event)
 
 
 class GameScreen(Screen):
