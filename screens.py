@@ -321,7 +321,7 @@ class ReflectionScreen(Screen):
         victory_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                     "assets", "Sonidos", "victory.mp3")
         self._sound_victory = pygame.mixer.Sound(victory_path)
-        self._victory_channel = None
+        self._victory_played = False
 
     def update(self, dt):
         super().update(dt)
@@ -329,8 +329,9 @@ class ReflectionScreen(Screen):
 
     def draw(self, surface):
         # Reproducir sonido de victoria solo una vez al entrar a la pantalla
-        if self._victory_channel is None or not self._victory_channel.get_busy():
-            self._victory_channel = self._sound_victory.play()
+        if not self._victory_played:
+            self._sound_victory.play()
+            self._victory_played = True
         
         self.draw_background(surface)
         cx = WIDTH // 2
@@ -391,9 +392,6 @@ class ReflectionScreen(Screen):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self._app.stop()
             return
-        # Detener el sonido de victoria cuando se sale de la pantalla
-        if self._victory_channel and self._victory_channel.get_busy():
-            self._victory_channel.stop()
         self._next.handle_event(event)
 
 
