@@ -129,6 +129,12 @@ class WelcomeScreen(Screen):
         self.finish(surface)
 
     def handle_event(self, event):
+        if event.type == pygame.QUIT:
+            self._app.stop()
+            return
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self._app.stop()
+            return
         self._start.handle_event(event)
 
 
@@ -264,6 +270,12 @@ class GameScreen(Screen):
         self.finish(surface)
 
     def handle_event(self, event):
+        if event.type == pygame.QUIT:
+            self._app.stop()
+            return
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self._app.stop()
+            return
         if self._popup:
             self._popup.handle_event(event)
             return
@@ -339,6 +351,12 @@ class ReflectionScreen(Screen):
         self.finish(surface)
 
     def handle_event(self, event):
+        if event.type == pygame.QUIT:
+            self._app.stop()
+            return
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self._app.stop()
+            return
         self._next.handle_event(event)
 
 
@@ -432,6 +450,12 @@ class AlbumScreen(Screen):
         self.finish(surface)
 
     def handle_event(self, event):
+        if event.type == pygame.QUIT:
+            self._app.stop()
+            return
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self._app.stop()
+            return
         self._close.handle_event(event)
         self._menu.handle_event(event)
         self._up.handle_event(event)
